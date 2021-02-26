@@ -5,12 +5,12 @@ class SongsController < ApplicationController
   def index
     @songs = Song.all
 
-    render json: @songs
+    render json: @songs.to_json(include: :playlists)
   end
 
   # GET /songs/1
   def show
-    render json: @song
+    render json: @song.to_json(include: :playlists)
   end
 
   # POST /songs
@@ -46,6 +46,6 @@ class SongsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def song_params
-      params.require(:song).permit(:title, :artist, :album)
+      params.require(:song).permit(:title, :artist, :album, :playlist_id)
     end
 end
